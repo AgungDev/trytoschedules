@@ -20,7 +20,7 @@ class Setup {
         $this->auth = new Auth();
     }
 
-    public function regristration(){
+    public function hostName(){
         return $this->auth->loadF5M();
     }
 
@@ -49,8 +49,13 @@ class Setup {
         }
     }
 
-    public function loginPages(){
-        require_once __DIR__.'/pages/login.php';
+    public function logins(){
+        if(self::getToken() != null){
+            echo self::getToken();
+        }else{
+            require_once __DIR__.'/pages/login.php';
+        }
+        
     }
 
     public function getToken(){

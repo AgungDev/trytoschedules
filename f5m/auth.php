@@ -13,26 +13,26 @@ use fun5i\manager\modules\CookieManager;
 
 class Auth {
 
-    private static $API = "http://113.14.15.14:40001/api/";
+    private $_API;
 
     private $cookieManager;
 
     public function __construct(){
         $this->cookieManager = new CookieManager(CookieManager::$_NAME_TOKEN);
+        $this->_API = "http://".$this->loadF5M()->{'server'}."/api/"; // setHost
     }
 
     public function loadF5M(){
         $file = __DIR__."/f5m.json";
-        $myfile = fopen($file, "r") or die("Unable to open file!");
-        $result = fread($myfile, filesize($file));
-        fclose($myfile);
+        $filedata = file_get_contents($file);
+        $details = json_decode($filedata);
 
-        return json_decode($result);
+        return ($details);
     }
 
     private function curlSign($post){
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, Auth::$API."users.php?signin");
+        curl_setopt($ch, CURLOPT_URL, $this->_API."users.php?signin");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($post));
         $response = curl_exec($ch);
@@ -62,7 +62,7 @@ class Auth {
             $post = [
                 'token' => $this->getToken()
             ];
-            $response = $this->curlSign($post);
+            $response = self::curlSign($post);
             if (!$response->{'error'}){
                 $out = true;
             }else{

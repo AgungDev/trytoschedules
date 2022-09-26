@@ -26,7 +26,7 @@ if ($setup->auth()){
         <span class="visually-hidden">Loading...</span>
     </div> -->
     <?php 
-    $setup->loginPages();
+    $setup->logins();
     ?>
 </body>
 </html>

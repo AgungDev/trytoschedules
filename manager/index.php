@@ -27,7 +27,7 @@ if (!$setup->auth()){
     <a href="logout.php">logout</a>
     <?php 
     echo "manager</br>";
-    var_dump($setup->regristration());
+    var_dump($setup->hostName());
 
     ?>
 </body>
